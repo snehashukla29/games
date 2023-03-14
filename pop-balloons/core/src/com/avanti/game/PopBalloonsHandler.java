@@ -10,7 +10,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -23,7 +22,7 @@ public class PopBalloonsHandler extends ApplicationAdapter {
     private Texture blackBalloonImg;
     private Sound popSound;
     private Music backgroundMusic;
-    private static final Integer numBalloons = 10;
+    private static final Integer numBalloons = 1;
     private Array<Rectangle> balloons;
 
     private OrthographicCamera camera;
@@ -56,16 +55,16 @@ public class PopBalloonsHandler extends ApplicationAdapter {
 
                     if (b.contains(tmp.x, tmp.y)) {
                         System.out.println("This balloon is touched : " + b.toString());
+                        batch.begin();
+                        batch.setColor(Color.RED);
+                        batch.draw(balloonImg, x, y);
+                        batch.end();
                     }
                 }
                 return true;
             }
         });
-
-
-
     }
-
 
     private void spawnBalloons() {
         for (int i = 0; i < numBalloons; i++) {
@@ -80,7 +79,7 @@ public class PopBalloonsHandler extends ApplicationAdapter {
 
     @Override
     public void render() {
-        ScreenUtils.clear(1, 1, 1, 1);
+        ScreenUtils.clear(Color.WHITE);
         Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
 
         camera.update();
