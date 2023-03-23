@@ -19,11 +19,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PopBalloonsHandler extends ApplicationAdapter {
     private Texture balloonImg;
-    private Texture blackBalloonImg;
-    private Sound popSound;
+    private Texture palletteImg;
     private Music backgroundMusic;
-    private static final Integer numBalloons = 1;
+    private static final Integer numBalloons = 10;
     private Array<Rectangle> balloons;
+    private Rectangle colorPicker;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -31,8 +31,8 @@ public class PopBalloonsHandler extends ApplicationAdapter {
     @Override
     public void create() {
         balloonImg = new Texture("balloon.png");
-        blackBalloonImg = new Texture("black_balloon.png");
-        popSound = Gdx.audio.newSound(Gdx.files.internal("pop.mp3"));
+        palletteImg = new Texture("pallette.png");
+//        popSound = Gdx.audio.newSound(Gdx.files.internal("pop.mp3"));
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("background.mp3"));
 
         backgroundMusic.setLooping(true);
@@ -45,17 +45,20 @@ public class PopBalloonsHandler extends ApplicationAdapter {
         balloons = new Array<>(numBalloons);
         spawnBalloons();
 
+        createColorPicker();
+
         Gdx.input.setInputProcessor(new InputAdapter() {
 
             @Override
             public boolean touchDown(int x, int y, int pointer, int button) {
-                for (Rectangle b : balloons) {
-                    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-                    camera.unproject(tmp);
+                Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camera.unproject(tmp);
 
+                for (Rectangle b : balloons) {
                     if (b.contains(tmp.x, tmp.y)) {
-                        System.out.println("This balloon is touched : " + b.toString());
+                        System.out.println("This balloon is touched : " + b);
                         batch.begin();
+                        batch.setColor(Color.WHITE);
                         batch.setColor(Color.RED);
                         batch.draw(balloonImg, x, y);
                         batch.end();
@@ -66,11 +69,19 @@ public class PopBalloonsHandler extends ApplicationAdapter {
         });
     }
 
+    private void createColorPicker() {
+        colorPicker = new Rectangle();
+        colorPicker.setX(672);
+        colorPicker.setY(352);
+        colorPicker.setHeight(128);
+        colorPicker.setWidth(128);
+    }
+
     private void spawnBalloons() {
         for (int i = 0; i < numBalloons; i++) {
             Rectangle balloon = new Rectangle();
-            balloon.x = MathUtils.random(0, 800 - 64);
-            balloon.y = MathUtils.random(0, 480 - 64);
+            balloon.x = MathUtils.random(0, 800 - 128);
+            balloon.y = MathUtils.random(0, 480 - 128);
             balloon.width = 64;
             balloon.height = 64;
             balloons.add(balloon);
@@ -86,6 +97,7 @@ public class PopBalloonsHandler extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
+        batch.draw(palletteImg, colorPicker.getX(), colorPicker.getY());
         for (Rectangle b : balloons) {
             batch.draw(balloonImg, b.x, b.y);
         }
