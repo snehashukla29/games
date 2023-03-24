@@ -30,10 +30,12 @@ public class Balloon extends Actor {
         setTouchable(Touchable.enabled);
 
         addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Color touchedColor = (Color) getParent().getUserObject();
-                event.getTarget().setColor(touchedColor);
-                System.out.println("down");
+
+                if (touchedColor != null)
+                    event.getTarget().setColor(touchedColor);
+
                 return true;
             }
         });

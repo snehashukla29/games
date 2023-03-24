@@ -1,6 +1,8 @@
 package com.avanti.game.actors;
 
-import com.avanti.game.Constants;
+import static com.avanti.game.Constants.ColorPaletteConstants.colorPaletteName;
+import static com.avanti.game.Constants.ColorPaletteConstants.xBound;
+import static com.avanti.game.Constants.ColorPaletteConstants.yBound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,29 +11,27 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class ColorPalette extends Actor {
 
     private TextureRegion region;
     private Texture colorPalletteTexture = new Texture("palette.png");
-    private static int xBound = 672;
-    private static int yBound = 352;
+
     private Color touchedColor;
 
     public ColorPalette() {
         region = new TextureRegion(colorPalletteTexture);
         setBounds(xBound, yBound,
                 region.getRegionWidth(), region.getRegionHeight());
-        setName(Constants.colorPaletteName);
+        setName(colorPaletteName);
 
         setTouchable(Touchable.enabled);
 
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("palette touched");
                 region.getTexture().getTextureData().prepare();
                 touchedColor = new Color(region.getTexture().getTextureData().consumePixmap().getPixel((int) x, (int) y));
+                System.out.println("Touched color on the palette is : " + touchedColor);
                 getParent().setUserObject(touchedColor);
                 return true;
             }

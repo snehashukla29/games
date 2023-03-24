@@ -1,5 +1,7 @@
 package com.avanti.game;
 
+import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
+
 import com.avanti.game.actors.Balloon;
 import com.avanti.game.actors.ColorPalette;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -18,11 +20,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class PopBalloons implements ApplicationListener {
     private Stage stage;
-    private static int numBalloons = 10;
+    private static int numBalloons = 6;
     private Array<Balloon> balloons;
     private ColorPalette colorPalette;
 
@@ -33,7 +36,7 @@ public class PopBalloons implements ApplicationListener {
         colorPalette = new ColorPalette();
         stage.addActor(colorPalette);
 
-        balloons = new Array<>(Util.spawnBalloons(numBalloons));
+        balloons = new Array<>(Util.spawnBalloonsNew(numBalloons));
 
         for (Balloon b : balloons) {
             stage.addActor(b);
@@ -47,7 +50,9 @@ public class PopBalloons implements ApplicationListener {
 
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
+        ScreenUtils.clear(Color.WHITE);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         stage.act(delta);
         stage.draw();
