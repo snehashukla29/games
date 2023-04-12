@@ -21,6 +21,7 @@ public class Balloon extends Actor {
     private int xPos = 0;
     private int yPos = 0;
 
+
     public Balloon(int posX, int posY) {
         init(posX, posY);
         region = new TextureRegion(balloonTexture);
@@ -41,6 +42,7 @@ public class Balloon extends Actor {
         });
     }
 
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Color color = getColor();
@@ -49,10 +51,11 @@ public class Balloon extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
-    public void init(int x, int y) {
+    private void init(int x, int y) {
         this.xPos = x;
         this.yPos = y;
     }
+
 
 
 }

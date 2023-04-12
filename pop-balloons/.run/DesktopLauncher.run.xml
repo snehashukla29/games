@@ -5,7 +5,7 @@
     <option name="PROGRAM_PARAMETERS" value="--stacktrace" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.avanti.game.*" />
+        <option name="PATTERN" value="com.avanti.game.screen.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
