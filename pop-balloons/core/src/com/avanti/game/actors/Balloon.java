@@ -20,6 +20,7 @@ public class Balloon extends Actor {
     private Texture balloonTexture = new Texture("balloon.png");
     private int xPos = 0;
     private int yPos = 0;
+    private Color ownColor = null;
 
 
     public Balloon(int posX, int posY) {
@@ -34,9 +35,11 @@ public class Balloon extends Actor {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Color touchedColor = (Color) getParent().getUserObject();
 
-                if (touchedColor != null)
+                if (touchedColor != null) {
                     event.getTarget().setColor(touchedColor);
-
+                    ownColor = touchedColor;
+                    setTouchable(Touchable.disabled);
+                }
                 return true;
             }
         });
@@ -56,6 +59,7 @@ public class Balloon extends Actor {
         this.yPos = y;
     }
 
-
-
+    public Color getOwnColor() {
+        return ownColor;
+    }
 }

@@ -4,7 +4,10 @@ import com.avanti.game.PopBalloons;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MainScreen implements Screen {
@@ -23,10 +26,14 @@ public class MainScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+        ScreenUtils.clear(1, 1, 1, 1);
+
+        Texture bgImage = new Texture("bgImg.png");
+
         game.batch.begin();
-        game.font.draw(game.batch, "Welcome to Pop Balloons!!! ", 100, 150);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
+        game.batch.draw(bgImage, 0, 0);
+        game.font.setColor(Color.BLUE);
+        game.font.draw(game.batch, "Welcome to Pop Balloons. Tap anywhere to begin ", 250, 250);
         game.batch.end();
 
         if (Gdx.input.isTouched()) {

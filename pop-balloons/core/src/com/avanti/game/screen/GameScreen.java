@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -42,6 +43,22 @@ public class GameScreen implements Screen {
         game.stage.act(delta);
         game.stage.draw();
 
+        Boolean enableNextScreen = checkBalloonStatus();
+
+        if(enableNextScreen) {
+            dispose();
+            game.setScreen(new EndScreen(game, balloons));
+
+        }
+    }
+
+    private Boolean checkBalloonStatus() {
+        for(Balloon b : balloons) {
+            if(b.isTouchable())
+                return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -66,6 +83,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        game.stage.clear();
+//        game.stage.dispose();
 
     }
 }
